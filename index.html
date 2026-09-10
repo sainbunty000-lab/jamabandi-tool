@@ -3,109 +3,166 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jamabandi Smart Assistant</title>
+  <title>Jamabandi Nakal Pro Assistant</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background: #f0f2f5; padding: 16px; display: flex; flex-direction: column; align-items: center; }
-
+    body { background: #eef2f6; padding: 14px; display: flex; flex-direction: column; align-items: center; }
+    
     .card {
-      width: 100%; max-width: 480px; background: #ffffff; border-radius: 12px;
-      padding: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 16px;
+      width: 100%; max-width: 460px; background: #ffffff; border-radius: 12px;
+      padding: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 12px;
     }
 
-    .header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-    .header-row h1 { font-size: 17px; color: #0b6623; font-weight: bold; }
-    .badge { background: #e8f5e9; color: #2e7d32; font-size: 12px; padding: 4px 8px; border-radius: 20px; font-weight: bold; }
+    .title-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    h1 { font-size: 16px; color: #0b6623; font-weight: 700; }
+    .badge { background: #e8f5e9; color: #2e7d32; font-size: 11px; padding: 3px 8px; border-radius: 20px; font-weight: bold; }
 
-    label { font-size: 13px; font-weight: 600; color: #444; margin-bottom: 6px; display: block; }
-    
-    .input-group { display: flex; gap: 8px; margin-bottom: 12px; }
-    input {
-      flex: 1; padding: 12px; border: 1.5px solid #0b6623; border-radius: 8px;
-      font-size: 15px; outline: none;
+    /* Open Portal Quick Links */
+    .link-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+    .btn-portal {
+      padding: 12px 8px; border-radius: 8px; border: none; font-size: 13px;
+      font-weight: 600; cursor: pointer; text-align: center; text-decoration: none; color: white;
     }
-    
-    button.btn-main {
-      width: 100%; padding: 13px; background: #0b6623; color: white; border: none;
-      border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer;
-      display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 10px;
+    .bg-green { background: #0b6623; }
+    .bg-blue { background: #1a73e8; }
+
+    /* Search Modes */
+    label { font-size: 12px; font-weight: 600; color: #555; margin-bottom: 6px; display: block; }
+    .search-type-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 10px; }
+    .radio-pill {
+      background: #f1f3f4; padding: 8px; border-radius: 6px; font-size: 12px;
+      display: flex; align-items: center; gap: 6px; cursor: pointer;
     }
-    button.btn-sub {
-      width: 100%; padding: 11px; background: #1a73e8; color: white; border: none;
+
+    /* Input & Action */
+    input[type="text"] {
+      width: 100%; padding: 11px; border: 1.5px solid #0b6623; border-radius: 8px;
+      font-size: 14px; margin-bottom: 10px; outline: none;
+    }
+    .btn-run {
+      width: 100%; padding: 12px; background: #ff9800; color: white; border: none;
       border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer;
     }
 
     .info-box {
-      background: #eef3fc; border-left: 4px solid #1a73e8; padding: 10px;
-      border-radius: 4px; font-size: 13px; color: #1e3a8a; line-height: 1.5; margin-top: 10px;
-    }
-
-    /* Floating Bookmark Tool (For In-Page Filter) */
-    .magic-link {
-      display: block; width: 100%; text-align: center; background: #ff9800;
-      color: white; padding: 12px; border-radius: 8px; font-weight: bold;
-      text-decoration: none; font-size: 14px; margin-top: 10px;
+      background: #f8f9fa; border-left: 3.5px solid #ff9800; padding: 10px;
+      border-radius: 4px; font-size: 12px; color: #333; line-height: 1.4; margin-top: 10px;
     }
   </style>
 </head>
 <body>
 
+  <!-- Top Direct Open Section -->
   <div class="card">
-    <div class="header-row">
-      <h1>⚡ Jamabandi Smart Tool</h1>
-      <span class="badge" id="sessionStatus">🟢 Active</span>
+    <div class="title-bar">
+      <h1>⚡ Jamabandi Nakal Pro</h1>
+      <span class="badge">🟢 Session Active</span>
     </div>
 
-    <!-- Step 1: Open Portal Directly -->
-    <button class="btn-main" onclick="openPortal()">
-      🚀 1-क्लिक में Jamabandi पोर्टल खोलें
+    <div class="link-grid">
+      <button class="btn-portal bg-green" onclick="openPage('https://jamabandi.nic.in/land%20records/NakalRecord')">
+        📄 Nakal Details खोलें
+      </button>
+      <button class="btn-portal bg-blue" onclick="openPage('https://jamabandi.nic.in/IGLR/SearchRural')">
+        🏛️ IGLR Registry खोलें
+      </button>
+    </div>
+  </div>
+
+  <!-- Search Helper Section -->
+  <div class="card">
+    <label>सर्च का प्रकार चुनें (Select Search Mode):</label>
+    <div class="search-type-grid">
+      <label class="radio-pill">
+        <input type="radio" name="stype" value="Owner" checked> By Owner Name
+      </label>
+      <label class="radio-pill">
+        <input type="radio" name="stype" value="Khewat"> By Khewat
+      </label>
+      <label class="radio-pill">
+        <input type="radio" name="stype" value="Khasra"> By Khasra No.
+      </label>
+      <label class="radio-pill">
+        <input type="radio" name="stype" value="Mutation"> By Mutation Date
+      </label>
+    </div>
+
+    <label>पिता / दादा का नाम या नंबर दर्ज करें:</label>
+    <input type="text" id="filterVal" placeholder="उदा: Ramesh / हवा सिंह / 14//5" />
+
+    <button class="btn-run" onclick="generateAndCopy()">
+      📋 ऑटो-फिल्टर कोड कॉपी करें
     </button>
 
     <div class="info-box">
-      <b>पिता या दादा का नाम फिल्टर कैसे करें:</b><br>
-      पोर्टल खुलने के बाद जब गांव चुन लें, तो नाम ढूंढने के लिए नीचे दिए गए बटन का इस्तेमाल करें।
+      <b>इस्तेमाल का तरीका:</b><br>
+      1. ऊपर हरे बटन से <b>Nakal Details</b> खोलें।<br>
+      2. जिला, तहसील और गांव चुनें।<br>
+      3. यहाँ से कोड कॉपी करके Nakal वाले पेज के एड्रेस बार में पेस्ट करके Enter दबाएं।
     </div>
-  </div>
-
-  <div class="card">
-    <label>पिता या दादा का नाम दर्ज करें:</label>
-    <div class="input-group">
-      <input type="text" id="parentName" placeholder="उदा: Ramesh / हवा सिंह" />
-    </div>
-
-    <button class="btn-sub" onclick="copyFilterCode()">
-      📋 फिल्टर टूल चालू करें (Copy Code)
-    </button>
   </div>
 
   <script>
-    // 1. Open Portal in Direct Clean View (Bypasses Frame Blocks)
-    function openPortal() {
-      window.open("https://jamabandi.nic.in/IGLR/SearchRural", "_blank");
+    function openPage(url) {
+      window.open(url, "_blank");
     }
 
-    // 2. Keep-Alive Ping (Runs in background)
+    // Keep session active in background
     setInterval(() => {
-      fetch("https://jamabandi.nic.in/IGLR/SearchRural", { mode: 'no-cors' })
-        .then(() => {
-          document.getElementById("sessionStatus").innerText = "🟢 Active";
-        })
-        .catch(() => {});
+      fetch("https://jamabandi.nic.in/land%20records/NakalRecord", { mode: 'no-cors' });
     }, 240000);
 
-    // 3. Inject Filter Script
-    function copyFilterCode() {
-      const q = document.getElementById("parentName").value.trim().toLowerCase();
-      if (!q) {
-        alert("कृपया पहले पिता या दादा का नाम बॉक्स में लिखें!");
+    function generateAndCopy() {
+      const q = document.getElementById("filterVal").value.trim().toLowerCase();
+      const type = document.querySelector('input[name="stype"]:checked').value;
+
+      if (!q && type === "Owner") {
+        alert("कृपया पिता या दादा का नाम लिखें!");
         return;
       }
 
-      // Generate in-page search command
-      const code = `javascript:(function(){let q='${q}';let s=null;document.querySelectorAll('select').forEach(el=>{if(el.options.length>15)s=el;});if(!s){alert('कृपया पोर्टल पर पहले गांव चुनकर नाम लोड होने दें!');return;}let m=0;for(let i=0;i<s.options.length;i++){if(s.options[i].text.toLowerCase().includes(q)){s.selectedIndex=i;s.dispatchEvent(new Event('change',{bubbles:true}));m++;break;}}if(!m)alert('इस नाम से कोई रिकॉर्ड नहीं मिला!');})();`;
+      // Generated direct-run script for the portal
+      const runnerCode = `javascript:(function(){
+        // 1. रेडियो बटन सेलेक्ट करें
+        const radios = document.querySelectorAll('input[type="radio"]');
+        radios.forEach(r => {
+          if(r.nextSibling && r.nextSibling.textContent.includes('${type}')) {
+            r.click();
+          }
+        });
 
-      navigator.clipboard.writeText(code).then(() => {
-        alert("सर्च कोड कॉपी हो गया है!\n\nJamabandi पोर्टल वाले टैब में जाएं, एड्रेस बार में इसे पेस्ट करके Enter दबाएं। नाम अपने आप सेलेक्ट हो जाएगा।");
+        // 2. नवीनतम जमाबंदी साल (Latest Year) खुद सेलेक्ट करें
+        const selects = document.querySelectorAll('select');
+        selects.forEach(s => {
+          if(s.id.toLowerCase().includes('year') && s.options.length > 1) {
+            s.selectedIndex = 1;
+            s.dispatchEvent(new Event('change', {bubbles:true}));
+          }
+        });
+
+        // 3. पिता / दादा के नाम से ओनर लिस्ट फिल्टर करें
+        let q = '${q}';
+        if(q) {
+          let ownerSelect = null;
+          selects.forEach(s => { if(s.options.length > 15) ownerSelect = s; });
+          if(ownerSelect) {
+            let matched = false;
+            for(let i=0; i<ownerSelect.options.length; i++) {
+              if(ownerSelect.options[i].text.toLowerCase().includes(q)) {
+                ownerSelect.selectedIndex = i;
+                ownerSelect.dispatchEvent(new Event('change', {bubbles:true}));
+                matched = true;
+                alert('चयनित नाम: ' + ownerSelect.options[i].text);
+                break;
+              }
+            }
+            if(!matched) alert('इस नाम (' + q + ') से कोई रिकॉर्ड नहीं मिला!');
+          }
+        }
+      })();`;
+
+      navigator.clipboard.writeText(runnerCode.replace(/\\s+/g, ' ')).then(() => {
+        alert("कोड कॉपी हो गया है!\\n\\nNakal Details वाले पेज पर जाएं, एड्रेस बार में इसे पेस्ट करके Enter दबाएं।");
       });
     }
   </script>
